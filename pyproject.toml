@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rag-assessment"
+version = "0.1.0"
+description = "Context-Aware Retrieval Engine: semantic RAG + vector search benchmark"
+requires-python = ">=3.10"
+dependencies = [
+    "sentence-transformers>=2.7.0",
+    "faiss-cpu>=1.8.0",
+    "numpy>=1.26.0",
+    "rich>=13.7.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+markers = [
+    "slow: marks tests requiring real model downloads (deselect with '-m \"not slow\"')",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::FutureWarning",
+]
