@@ -88,13 +88,20 @@ store = FaissVectorStore.load("saved_index")
 For this assessment the corpus is tiny, but the mechanism is in place so the
 same code scales.
 
-## Strategies in one paragraph
+## Strategies
 
-Both strategies share the same embedding model, FAISS index, and corpus. Strategy A
-embeds the query verbatim. Strategy B first calls a mocked `GenerativeModel` to produce
-either (1) a single domain-enriched *rewrite* of the query, or (2) three *HyDE*-style
-hypothetical answer passages whose embeddings are averaged and renormalized. Both B
-variants run against the same index so the delta is purely in the query representation.
+Two strategies, per the assessment PDF:
+
+- **Strategy A — Raw Vector Search.** Embed the query verbatim, search FAISS.
+- **Strategy B — AI-Enhanced Retrieval.** A mocked `GenerativeModel` rewrites the
+  query with domain synonyms before embedding and searching. This is the
+  "Query Expansion" strategy named in the PDF.
+
+**Bonus:** the benchmark also reports a third column, **HyDE**, which is an
+alternative Strategy B implementation where the mock produces three hypothetical
+answer passages and we average their embeddings before search. HyDE is not
+required by the assessment — it's included to demonstrate a second expansion
+technique for comparison.
 
 ## Design decisions
 

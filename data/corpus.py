@@ -1,7 +1,7 @@
 """Technical corpus used by the RAG benchmark.
 
-Eight short passages covering distinct operational topics. Queries in the benchmark
-target specific topics so the ranked results are interpretable.
+Sixteen short passages covering distinct operational topics. Queries in the
+benchmark target specific topics so the ranked results are interpretable.
 """
 
 from __future__ import annotations
