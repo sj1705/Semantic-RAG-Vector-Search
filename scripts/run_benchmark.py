@@ -30,7 +30,6 @@ from data.corpus import CORPUS  # noqa: E402
 from rag.benchmark import (  # noqa: E402
     DEFAULT_QUERIES,
     make_pipeline_factory_from_store,
-    reports_to_markdown,
     run_benchmark,
     write_report_files,
 )

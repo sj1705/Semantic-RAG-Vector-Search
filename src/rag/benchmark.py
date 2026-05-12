@@ -14,8 +14,6 @@ from typing import Iterable, Sequence
 
 from rag.config import RagConfig
 from rag.retriever import ComparisonResult, RAGPipeline, RetrievalHit
-from rag.query_expansion import QueryExpander
-from rag.vertex_mocks import GenerativeModel
 
 
 # Benchmark queries — the assessment mandates ≥3 complex queries; we include
