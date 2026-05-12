@@ -103,3 +103,34 @@ def test_topk_larger_than_size_clamps(small_vectors):
     query = _normalize(np.array([[1.0, 0.0, 0.0]], dtype=np.float32))[0]
     hits = store.search(query, k=100)
     assert len(hits) == 4
+
+
+def test_save_and_load_round_trip(small_vectors, tmp_path):
+    ids, texts, vectors = small_vectors
+    store = FaissVectorStore(dimension=3, metric="cosine")
+    store.add(ids, texts, vectors)
+
+    query = _normalize(np.array([[1.0, 0.0, 0.0]], dtype=np.float32))[0]
+    before = store.search(query, k=4)
+
+    store.save(tmp_path)
+    # Both files must exist — they are a matched pair.
+    assert (tmp_path / "index.faiss").is_file()
+    assert (tmp_path / "metadata.json").is_file()
+
+    # Re-open in a fresh instance and confirm retrieval is identical.
+    reloaded = FaissVectorStore.load(tmp_path)
+    after = reloaded.search(query, k=4)
+
+    assert [h.doc_id for h in before] == [h.doc_id for h in after]
+    assert [h.text for h in before] == [h.text for h in after]
+    for b, a in zip(before, after):
+        assert abs(b.score - a.score) < 1e-6
+    assert reloaded.size == store.size
+    assert reloaded.metric == store.metric
+    assert reloaded.dimension == store.dimension
+
+
+def test_load_missing_files_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        FaissVectorStore.load(tmp_path)

@@ -8,7 +8,9 @@ touching callers.
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Protocol, Sequence
 
 import numpy as np
@@ -132,6 +134,74 @@ class FaissVectorStore:
                 )
             )
         return hits
+
+    # -- persistence ---------------------------------------------------------
+
+    def save(self, directory: str | Path) -> None:
+        """Persist the index and its metadata to disk.
+
+        Writes two files into ``directory``:
+
+        * ``index.faiss``   — the vector index (FAISS's binary format).
+        * ``metadata.json`` — ``doc_ids``, ``texts``, ``metric``, and
+          ``dimension`` so the store can be rebuilt exactly.
+
+        The two files MUST be kept together — the FAISS index only knows row
+        numbers; the metadata file is what maps those rows back to doc IDs and
+        source text.
+        """
+        import faiss
+
+        path = Path(directory)
+        path.mkdir(parents=True, exist_ok=True)
+
+        faiss.write_index(self._index, str(path / "index.faiss"))
+
+        metadata = {
+            "metric": self._metric,
+            "dimension": self._dim,
+            "doc_ids": self._doc_ids,
+            "texts": self._texts,
+        }
+        (path / "metadata.json").write_text(
+            json.dumps(metadata, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+
+    @classmethod
+    def load(cls, directory: str | Path) -> "FaissVectorStore":
+        """Rebuild a :class:`FaissVectorStore` from files written by :meth:`save`.
+
+        Raises :class:`FileNotFoundError` if either ``index.faiss`` or
+        ``metadata.json`` is missing — they are a matched pair and partial
+        state is meaningless.
+        """
+        import faiss
+
+        path = Path(directory)
+        index_path = path / "index.faiss"
+        metadata_path = path / "metadata.json"
+        if not index_path.exists() or not metadata_path.exists():
+            raise FileNotFoundError(
+                f"Both index.faiss and metadata.json must exist in {path}"
+            )
+
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+
+        store = cls.__new__(cls)  # bypass __init__ (which would build a fresh index)
+        store._metric = metadata["metric"]
+        store._dim = int(metadata["dimension"])
+        store._index = faiss.read_index(str(index_path))
+        store._doc_ids = list(metadata["doc_ids"])
+        store._texts = list(metadata["texts"])
+
+        # Sanity check: the three collections must stay aligned.
+        if store._index.ntotal != len(store._doc_ids):
+            raise ValueError(
+                f"Corrupt store: index has {store._index.ntotal} vectors but "
+                f"{len(store._doc_ids)} doc_ids on disk"
+            )
+        return store
 
 
 __all__ = ["StoredHit", "VectorStore", "FaissVectorStore"]
