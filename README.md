@@ -16,13 +16,17 @@ mock of the `vertexai.language_models` SDK so Strategy B is reproducible and tes
 ```
 src/rag/          core modules (config, embeddings, vector_store, vertex_mocks,
                   query_expansion, retriever, benchmark)
-data/corpus.py    8 technical paragraphs used as the evaluation corpus
+data/corpus.py    16 technical paragraphs used as the evaluation corpus
 tests/            pytest suites (incl. GCP SDK mock contract tests)
 scripts/          run_benchmark.py, save_index.py, search_saved.py
-docs/DESIGN.md    similarity-metric rationale + Vertex AI Matching Engine migration
-retrieval_benchmark.md   generated A-vs-B comparison report (committed as dev evidence)
 saved_index/      optional persisted FAISS index (index.faiss + metadata.json)
 ```
+
+Docs:
+
+- [`docs/DESIGN.md`](docs/DESIGN.md) — similarity-metric rationale + Vertex AI Matching Engine migration.
+- [`docs/PERSISTENCE.md`](docs/PERSISTENCE.md) — how to save/load the FAISS index.
+- [`retrieval_benchmark.md`](retrieval_benchmark.md) — generated A-vs-B comparison report (committed as dev evidence).
 
 ## Quickstart
 
@@ -44,49 +48,11 @@ python scripts/run_benchmark.py
 
 ## Persisting the index
 
-FAISS is an in-memory library by default — close the Python process and the
-index is gone. For larger corpora you do NOT want to re-embed every startup,
-so `FaissVectorStore` ships with explicit `save()` / `load()` helpers.
+FAISS is in-memory by default. `FaissVectorStore.save()` / `.load()` write two
+files (`index.faiss` + `metadata.json`) so the corpus is embedded only once.
 
-Two files are written, and both are required to reload:
-
-| File | Contents | Why it's needed |
-| --- | --- | --- |
-| `index.faiss` | The raw vectors (binary FAISS format) | Enables nearest-neighbor search |
-| `metadata.json` | `doc_ids`, `texts`, `metric`, `dimension` | Maps FAISS row numbers back to real docs; without it, search returns numbers with nothing to look up |
-
-### Build once, search many times
-
-```bash
-# Embed the corpus and write index.faiss + metadata.json to ./saved_index/
-python scripts/save_index.py
-
-# Load the saved index (milliseconds) and run a query
-python scripts/search_saved.py "How does the system handle peak load?"
-python scripts/search_saved.py "database failover"
-```
-
-### Programmatic use
-
-```python
-from rag.vector_store import FaissVectorStore
-
-# Save
-store.save("saved_index")
-
-# Load later (raises FileNotFoundError if either file is missing)
-store = FaissVectorStore.load("saved_index")
-```
-
-### Why it matters at scale
-
-| Corpus size | Without persistence (re-embed each run) | With persistence (load from disk) |
-| --- | --- | --- |
-| 8 docs | ~1.7 s | ~150 ms |
-| 100,000 docs | ~20 minutes | < 1 s |
-
-For this assessment the corpus is tiny, but the mechanism is in place so the
-same code scales.
+See [`docs/PERSISTENCE.md`](docs/PERSISTENCE.md) for the full details, file format, and
+programmatic / CLI usage.
 
 ## Strategies
 
@@ -97,7 +63,7 @@ Two strategies, per the assessment PDF:
   query with domain synonyms before embedding and searching. This is the
   "Query Expansion" strategy named in the PDF.
 
-**Bonus:** the benchmark also reports a third column, **HyDE**, which is an
+**Extra:** the benchmark also reports a third column, **HyDE**, which is an
 alternative Strategy B implementation where the mock produces three hypothetical
 answer passages and we average their embeddings before search. HyDE is not
 required by the assessment — it's included to demonstrate a second expansion
@@ -105,7 +71,7 @@ technique for comparison.
 
 ## Design decisions
 
-See `docs/DESIGN.md` for:
+See [`docs/DESIGN.md`](docs/DESIGN.md) for:
 - Why cosine similarity (and when Euclidean is the right pick instead).
 - How to migrate this pipeline to **Vertex AI Vector Search (Matching Engine)** in
   production without changing the `RAGPipeline` orchestrator.
