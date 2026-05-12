@@ -21,17 +21,22 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
+import time  # noqa: E402
+
 from rich.console import Console  # noqa: E402
 from rich.table import Table  # noqa: E402
 
 from data.corpus import CORPUS  # noqa: E402
 from rag.benchmark import (  # noqa: E402
     DEFAULT_QUERIES,
-    make_default_pipeline_factory,
+    make_pipeline_factory_from_store,
     reports_to_markdown,
     run_benchmark,
     write_report_files,
 )
+from rag.config import RagConfig  # noqa: E402
+from rag.embeddings import SentenceTransformerEmbedder  # noqa: E402
+from rag.vector_store import FaissVectorStore  # noqa: E402
 
 
 def _render_stdout_table(reports, console: Console) -> None:
@@ -65,6 +70,57 @@ def _render_stdout_table(reports, console: Console) -> None:
         console.print()
 
 
+def _load_or_build_store(
+    index_dir: Path, console: Console
+) -> tuple[FaissVectorStore, SentenceTransformerEmbedder]:
+    """Load the saved FAISS index if it exists; otherwise build and save it.
+
+    The index is embedded **once** per benchmark run. All 10 queries × 3
+    strategies = 30 pipeline builds share this same store, instead of
+    re-embedding the corpus 30 times.
+    """
+    config = RagConfig()
+
+    t0 = time.time()
+    embedder = SentenceTransformerEmbedder(
+        model_name=config.embedding_model,
+        query_prefix=config.bge_query_prefix,
+    )
+    console.print(
+        f"[dim]Loaded embedding model in {time.time() - t0:.1f}s[/]"
+    )
+
+    index_file = index_dir / "index.faiss"
+    metadata_file = index_dir / "metadata.json"
+
+    if index_file.exists() and metadata_file.exists():
+        t0 = time.time()
+        store = FaissVectorStore.load(index_dir)
+        console.print(
+            f"[green]Loaded {store.size} vectors from {index_dir} "
+            f"in {(time.time() - t0) * 1000:.0f}ms[/]"
+        )
+        return store, embedder
+
+    # Fall back to building the index from the corpus, then persist it so
+    # subsequent benchmark runs skip the embedding step entirely.
+    console.print(
+        f"[yellow]No saved index at {index_dir}; embedding corpus now…[/]"
+    )
+    t0 = time.time()
+    docs = list(CORPUS)
+    vectors = embedder.embed_documents([d.text for d in docs])
+    store = FaissVectorStore(dimension=embedder.dimension, metric=config.metric)
+    store.add([d.id for d in docs], [d.text for d in docs], vectors)
+    console.print(
+        f"[dim]Embedded {len(docs)} docs in {time.time() - t0:.1f}s[/]"
+    )
+
+    store.save(index_dir)
+    console.print(f"[green]Saved index to {index_dir}[/]")
+    return store, embedder
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run the RAG benchmark.")
     parser.add_argument(
@@ -86,14 +142,28 @@ def main() -> int:
         default=list(DEFAULT_QUERIES),
         help="Override the benchmark queries.",
     )
+    parser.add_argument(
+        "--index-dir",
+        type=Path,
+        default=ROOT / "saved_index",
+        help=(
+            "Directory containing a saved FAISS index. If missing, the "
+            "corpus is embedded once and saved there."
+        ),
+    )
     args = parser.parse_args()
 
     console = Console()
-    console.print("[bold]Building pipeline (loading embedding model)…[/]")
-    factory = make_default_pipeline_factory(CORPUS)
+    store, embedder = _load_or_build_store(args.index_dir, console)
+    factory = make_pipeline_factory_from_store(store, embedder)
 
-    console.print(f"[bold]Running benchmark on {len(args.queries)} queries…[/]")
+    console.print(
+        f"[bold]Running benchmark on {len(args.queries)} queries "
+        f"(shared index of {store.size} vectors)…[/]"
+    )
+    t0 = time.time()
     reports = run_benchmark(factory, queries=args.queries, k=3)
+    console.print(f"[dim]Benchmark took {time.time() - t0:.1f}s[/]")
 
     _render_stdout_table(reports, console)
 
