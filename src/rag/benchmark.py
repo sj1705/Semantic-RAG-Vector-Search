@@ -135,49 +135,6 @@ def run_benchmark(
     return reports
 
 
-def make_default_pipeline_factory(corpus):
-    """Return a factory that builds a fresh pipeline per call.
-
-    The previous version re-embedded the entire corpus for every call, which
-    meant 10 queries × 3 strategies = 30 full re-ingestions per benchmark run.
-    That's wasted compute because the corpus never changes.
-
-    This version embeds the corpus **once** — the first call builds the
-    embedder and the vector store; subsequent calls reuse both and only swap
-    the expansion mode. The per-call cost drops from "embed 16 docs" to "two
-    object instantiations".
-    """
-    from rag.embeddings import SentenceTransformerEmbedder
-    from rag.vector_store import FaissVectorStore
-
-    shared: dict[str, object] = {}
-
-    def _factory(*, expansion_mode: str = "rewrite") -> RAGPipeline:
-        config = RagConfig(expansion_mode=expansion_mode)
-
-        if "embedder" not in shared:
-            embedder = SentenceTransformerEmbedder(
-                model_name=config.embedding_model,
-                query_prefix=config.bge_query_prefix,
-            )
-            store = FaissVectorStore(
-                dimension=embedder.dimension, metric=config.metric
-            )
-            docs = list(corpus)
-            vectors = embedder.embed_documents([d.text for d in docs])
-            store.add([d.id for d in docs], [d.text for d in docs], vectors)
-            shared["embedder"] = embedder
-            shared["store"] = store
-
-        return RAGPipeline(
-            config=config,
-            embedder=shared["embedder"],  # type: ignore[arg-type]
-            vector_store=shared["store"],  # type: ignore[arg-type]
-        )
-
-    return _factory
-
-
 def make_pipeline_factory_from_store(store, embedder):
     """Factory that reuses a pre-built :class:`FaissVectorStore` and embedder.
 
@@ -321,7 +278,6 @@ __all__ = [
     "StrategyRun",
     "QueryReport",
     "run_benchmark",
-    "make_default_pipeline_factory",
     "make_pipeline_factory_from_store",
     "reports_to_markdown",
     "write_report_files",
