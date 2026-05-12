@@ -9,7 +9,15 @@
     "doc-05",
     "doc-06",
     "doc-07",
-    "doc-08"
+    "doc-08",
+    "doc-09",
+    "doc-10",
+    "doc-11",
+    "doc-12",
+    "doc-13",
+    "doc-14",
+    "doc-15",
+    "doc-16"
   ],
   "texts": [
     "The platform handles peak load by horizontally scaling stateless services through a Kubernetes Horizontal Pod Autoscaler driven by CPU utilization and a custom requests-per-second metric. During traffic spikes the autoscaler provisions additional replicas, while a global rate limiter sheds abusive traffic and a queue-based load leveler absorbs short bursts so downstream services never see more than their provisioned throughput.",
@@ -19,6 +27,14 @@
     "The observability stack combines structured JSON logs shipped through Fluent Bit, Prometheus metrics scraped from every pod, and OpenTelemetry distributed traces correlated by a shared request ID. Dashboards in Grafana and alerts in Alertmanager give on-call engineers a unified view when diagnosing incidents, and service-level objectives drive paging policy.",
     "Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after successful processing. When a downstream dependency slows down, consumers apply backpressure by reducing poll frequency, and a dead-letter queue captures poison messages after a bounded number of retries so a single bad payload never stalls the pipeline.",
     "Every merge to main triggers a CI pipeline that runs unit, integration, and contract tests before building a container image. Deployments use Argo Rollouts to progressively shift traffic through canary stages gated by service-level indicators, and any regression in error rate or latency triggers an automatic rollback to the last known-good revision.",
-    "Usage events from every service are aggregated nightly into the billing data warehouse. Rating rules convert raw usage into billable line items, and a separate invoicing service generates PDF invoices, pushes them to the customer portal, and reconciles payments against the accounts receivable ledger. This pipeline is intentionally decoupled from the online transactional path."
+    "Usage events from every service are aggregated nightly into the billing data warehouse. Rating rules convert raw usage into billable line items, and a separate invoicing service generates PDF invoices, pushes them to the customer portal, and reconciles payments against the accounts receivable ledger. This pipeline is intentionally decoupled from the online transactional path.",
+    "User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authorization is enforced by a central policy engine evaluating role-based and attribute-based rules, and every service validates tokens locally with cached JWKS keys. Multi-factor authentication is required for privileged roles, and session revocation propagates through a pub/sub invalidation channel within seconds.",
+    "All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity. Short-lived dynamic secrets are preferred over static keys, and every long-lived secret is rotated automatically on a schedule through a controller that updates dependent services and restarts pods gracefully. Emergency rotation is a single command and completes in under five minutes.",
+    "Feature flags are evaluated at the edge and inside services via a low-latency SDK backed by a consistent-hash store. Rollouts target user cohorts, geographies, or percentage-based buckets, and every flag emits an assignment event into the experimentation pipeline so A/B tests can attribute metric changes back to specific treatments. Kill switches let operators disable any feature in seconds without a redeploy.",
+    "Cloud spend is tagged per team, service, and environment, and a nightly FinOps job emits a per-team dashboard with anomaly alerts. Reserved instances and committed-use discounts cover predictable baseline workloads, while spot and preemptible nodes absorb bursty batch jobs. Rightsizing recommendations are generated weekly from utilization telemetry, and idle resources are reaped automatically after a grace period.",
+    "Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erases or anonymizes records across the online store, the warehouse, backups, and downstream analytics within the statutory deadline. Access requests are fulfilled by an automated export service that bundles all personal data into an encrypted archive for the user.",
+    "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipping land in a separate account in a different region. Quarterly game-day exercises restore the largest databases into an isolated VPC and verify application-level integrity before signing off on the runbook. Backup artifacts are encrypted and their retention matches the data classification policy.",
+    "Product search is powered by an inverted index refreshed from the catalog via a change-data-capture stream. Synonyms and stemming are tuned per locale, and a reranking layer applies learning-to-rank signals from click-through data. Query-side caching collapses identical searches within a short window, and a circuit breaker falls back to a minimal result set when the cluster is degraded.",
+    "Push notifications are fanned out through a dedicated notification service that batches APNs and FCM deliveries, respects per-user quiet hours, and deduplicates identical alerts across devices. Delivery receipts are correlated back to the originating event so campaign owners can measure open rates, and a throttle protects the provider APIs during coordinated launches."
   ]
 }

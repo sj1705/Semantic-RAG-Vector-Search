@@ -18,13 +18,20 @@ from rag.query_expansion import QueryExpander
 from rag.vertex_mocks import GenerativeModel
 
 
-# Benchmark queries — at least 3 complex queries as the assessment mandates; a
-# fourth is included to show behavior on a broader observability prompt.
+# Benchmark queries — the assessment mandates ≥3 complex queries; we include
+# ten that span the corpus topics so Strategy A vs Strategy B deltas are
+# visible across a variety of retrieval patterns.
 DEFAULT_QUERIES: tuple[str, ...] = (
     "How does the system handle peak load?",
     "What happens when the primary database fails over?",
     "How is sensitive customer data protected in transit?",
     "Explain the observability stack used to diagnose incidents.",
+    "How are user sessions and access tokens managed?",
+    "Describe how secrets and credentials are rotated.",
+    "How do feature flags support safe experimentation?",
+    "What does the disaster recovery strategy cover?",
+    "How is personal data handled when a user requests deletion?",
+    "How are push notifications delivered to mobile devices?",
 )
 
 
@@ -107,7 +114,7 @@ def run_benchmark(
         pipeline_b_hyde = pipeline_factory(expansion_mode="hyde")
         comparison_hyde: ComparisonResult = pipeline_b_hyde.retrieve_both(query, k)
         runs["strategy_b_hyde"] = StrategyRun(
-            label="Bonus: Strategy B variant (HyDE Expansion)",
+            label="Strategy B variant (HyDE Expansion)",
             hits=comparison_hyde.strategy_b,
             expansion="hyde",
             expansions_used=list(comparison_hyde.expansion.expansions),
@@ -176,7 +183,7 @@ def reports_to_markdown(reports: Iterable[QueryReport]) -> str:
     lines.append("  strategy described in the PDF.*")
     lines.append("")
     lines.append(
-        "A third column, **Bonus: HyDE**, is included for depth — a different"
+        "A third column, ** HyDE**, is included for depth — a different"
     )
     lines.append(
         "expansion technique where the mock produces three hypothetical answer"

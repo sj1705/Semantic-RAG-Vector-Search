@@ -133,6 +133,81 @@ _KEYWORD_SYNONYMS: dict[str, list[str]] = {
     "deploy": ["Argo Rollouts", "canary", "progressive delivery", "rollback"],
     "rollout": ["canary", "progressive traffic shift", "Argo Rollouts"],
     "cache": ["CDN", "edge cache", "origin shield", "stale-while-revalidate"],
+    "session": [
+        "OpenID Connect", "JWT access tokens", "refresh tokens",
+        "HTTP-only cookies", "session revocation",
+    ],
+    "token": [
+        "JWT", "OIDC", "JWKS", "refresh tokens", "short-lived credentials",
+    ],
+    "access": [
+        "authorization", "role-based access control", "attribute-based rules",
+        "policy engine", "multi-factor authentication",
+    ],
+    "authent": [
+        "OpenID Connect", "JWT", "multi-factor authentication", "JWKS",
+    ],
+    "secret": [
+        "HashiCorp Vault", "dynamic secrets", "workload identity",
+        "credential rotation", "key rotation",
+    ],
+    "credential": [
+        "Vault", "workload identity", "dynamic secrets",
+        "automated rotation",
+    ],
+    "rotat": [
+        "automated rotation", "short-lived credentials",
+        "scheduled rotation", "emergency rotation",
+    ],
+    "flag": [
+        "feature flags", "kill switch", "progressive rollout",
+        "cohort targeting", "A/B tests",
+    ],
+    "experiment": [
+        "A/B tests", "treatment", "cohort targeting",
+        "assignment events", "feature flags",
+    ],
+    "disaster": [
+        "recovery point objective", "recovery time objective",
+        "cross-region backups", "transaction-log shipping", "game-day",
+    ],
+    "backup": [
+        "full backups", "transaction-log shipping",
+        "cross-region replication", "retention",
+    ],
+    "recover": [
+        "RPO", "RTO", "restore", "runbook", "cross-region",
+    ],
+    "personal": [
+        "personally identifiable information", "GDPR deletion",
+        "purpose tags", "data subject requests",
+    ],
+    "privacy": [
+        "GDPR", "data subject requests", "anonymization",
+        "purpose tags", "legal basis",
+    ],
+    "delet": [
+        "erasure", "anonymization", "data subject request",
+        "statutory deadline", "backups",
+    ],
+    "notif": [
+        "APNs", "FCM", "push notifications", "delivery receipts",
+        "quiet hours", "deduplication",
+    ],
+    "push": [
+        "APNs", "FCM", "fan-out", "campaign", "throttle",
+    ],
+    "mobile": [
+        "iOS", "Android", "APNs", "FCM", "push notifications",
+    ],
+    "cost": [
+        "FinOps", "reserved instances", "committed-use discounts",
+        "spot instances", "rightsizing",
+    ],
+    "search": [
+        "inverted index", "synonyms", "stemming",
+        "learning to rank", "click-through signals",
+    ],
 }
 
 # Pre-seeded HyDE answers for the benchmark queries. These are deliberately short
@@ -170,6 +245,54 @@ _HYDE_PASSAGES: dict[str, list[str]] = {
         "visualized in Grafana with Alertmanager driving paging.",
         "Service level objectives translate user-visible reliability into "
         "paging policy for on-call engineers.",
+    ],
+    "session": [
+        "User sessions are managed with OpenID Connect issuing short-lived JWT "
+        "access tokens and rotating refresh tokens stored in HTTP-only cookies.",
+        "Authorization runs through a central policy engine evaluating "
+        "role-based and attribute-based rules at request time.",
+        "Session revocation is propagated within seconds through a pub/sub "
+        "invalidation channel so compromised sessions can be killed quickly.",
+    ],
+    "secret": [
+        "Service credentials live in HashiCorp Vault and are fetched at start "
+        "via workload identity rather than baked into images.",
+        "Dynamic short-lived secrets are preferred over static keys, and every "
+        "long-lived secret rotates automatically on a schedule.",
+        "Emergency rotation runs as a single operator command that updates "
+        "dependent services and restarts pods gracefully.",
+    ],
+    "flag": [
+        "Feature flags are evaluated at the edge and inside services via a "
+        "low-latency SDK backed by a consistent-hash store.",
+        "Rollouts target cohorts or percentage buckets and emit assignment "
+        "events so A/B tests can attribute metric changes to treatments.",
+        "Kill switches let operators disable any feature in seconds without "
+        "a redeploy, limiting blast radius during incidents.",
+    ],
+    "disaster": [
+        "Every stateful service has documented recovery point and recovery "
+        "time objectives backed by cross-region replication.",
+        "Daily full backups plus continuous transaction-log shipping land in "
+        "a separate account in a different region for isolation.",
+        "Quarterly game-day exercises restore the largest databases into an "
+        "isolated VPC and verify application-level integrity.",
+    ],
+    "deletion": [
+        "User deletion requests trigger a workflow that erases or anonymizes "
+        "records across the online store, warehouse, backups, and analytics.",
+        "Personal data is catalogued with purpose tags so each field's legal "
+        "basis for processing is explicit.",
+        "Access requests are fulfilled by an automated export service that "
+        "bundles all personal data into an encrypted archive for the user.",
+    ],
+    "push": [
+        "Push notifications are fanned out through a dedicated service that "
+        "batches APNs and FCM deliveries and respects per-user quiet hours.",
+        "Identical alerts are deduplicated across devices and delivery "
+        "receipts are correlated back to the originating event.",
+        "A throttle protects provider APIs during coordinated launches so "
+        "burst campaigns don't trip rate limits.",
     ],
 }
 

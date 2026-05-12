@@ -113,6 +113,107 @@ CORPUS: tuple[Document, ...] = (
             "online transactional path."
         ),
     ),
+    Document(
+        id="doc-09",
+        title="Authentication and Authorization",
+        text=(
+            "User authentication uses OpenID Connect with short-lived JWT access "
+            "tokens and rotating refresh tokens stored as HTTP-only cookies. "
+            "Authorization is enforced by a central policy engine evaluating "
+            "role-based and attribute-based rules, and every service validates "
+            "tokens locally with cached JWKS keys. Multi-factor authentication "
+            "is required for privileged roles, and session revocation propagates "
+            "through a pub/sub invalidation channel within seconds."
+        ),
+    ),
+    Document(
+        id="doc-10",
+        title="Secrets Management and Key Rotation",
+        text=(
+            "All service credentials, database passwords, and API tokens live in "
+            "HashiCorp Vault and are fetched at process start via workload identity. "
+            "Short-lived dynamic secrets are preferred over static keys, and every "
+            "long-lived secret is rotated automatically on a schedule through a "
+            "controller that updates dependent services and restarts pods "
+            "gracefully. Emergency rotation is a single command and completes in "
+            "under five minutes."
+        ),
+    ),
+    Document(
+        id="doc-11",
+        title="Feature Flags and Experimentation",
+        text=(
+            "Feature flags are evaluated at the edge and inside services via a "
+            "low-latency SDK backed by a consistent-hash store. Rollouts target "
+            "user cohorts, geographies, or percentage-based buckets, and every "
+            "flag emits an assignment event into the experimentation pipeline so "
+            "A/B tests can attribute metric changes back to specific treatments. "
+            "Kill switches let operators disable any feature in seconds without "
+            "a redeploy."
+        ),
+    ),
+    Document(
+        id="doc-12",
+        title="Cost Optimization and FinOps",
+        text=(
+            "Cloud spend is tagged per team, service, and environment, and a "
+            "nightly FinOps job emits a per-team dashboard with anomaly alerts. "
+            "Reserved instances and committed-use discounts cover predictable "
+            "baseline workloads, while spot and preemptible nodes absorb bursty "
+            "batch jobs. Rightsizing recommendations are generated weekly from "
+            "utilization telemetry, and idle resources are reaped automatically "
+            "after a grace period."
+        ),
+    ),
+    Document(
+        id="doc-13",
+        title="Data Privacy and GDPR Deletion",
+        text=(
+            "Personal data is catalogued with purpose tags so each field's legal "
+            "basis is explicit. User deletion requests trigger a workflow that "
+            "erases or anonymizes records across the online store, the warehouse, "
+            "backups, and downstream analytics within the statutory deadline. "
+            "Access requests are fulfilled by an automated export service that "
+            "bundles all personal data into an encrypted archive for the user."
+        ),
+    ),
+    Document(
+        id="doc-14",
+        title="Disaster Recovery and Backup Strategy",
+        text=(
+            "Every stateful service has a documented recovery point and recovery "
+            "time objective. Daily full backups and continuous transaction-log "
+            "shipping land in a separate account in a different region. Quarterly "
+            "game-day exercises restore the largest databases into an isolated "
+            "VPC and verify application-level integrity before signing off on "
+            "the runbook. Backup artifacts are encrypted and their retention "
+            "matches the data classification policy."
+        ),
+    ),
+    Document(
+        id="doc-15",
+        title="Search Indexing and Query Performance",
+        text=(
+            "Product search is powered by an inverted index refreshed from the "
+            "catalog via a change-data-capture stream. Synonyms and stemming are "
+            "tuned per locale, and a reranking layer applies learning-to-rank "
+            "signals from click-through data. Query-side caching collapses "
+            "identical searches within a short window, and a circuit breaker "
+            "falls back to a minimal result set when the cluster is degraded."
+        ),
+    ),
+    Document(
+        id="doc-16",
+        title="Mobile Push Notifications and Delivery",
+        text=(
+            "Push notifications are fanned out through a dedicated notification "
+            "service that batches APNs and FCM deliveries, respects per-user "
+            "quiet hours, and deduplicates identical alerts across devices. "
+            "Delivery receipts are correlated back to the originating event so "
+            "campaign owners can measure open rates, and a throttle protects "
+            "the provider APIs during coordinated launches."
+        ),
+    ),
 )
 
 

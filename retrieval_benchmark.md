@@ -10,7 +10,7 @@ against **Strategy B (AI-Enhanced Retrieval)** over the corpus in
   domain synonyms before embedding. *This is the "Query Expansion"
   strategy described in the PDF.*
 
-A third column, **Bonus: HyDE**, is included for depth — a different
+A third column, ** HyDE**, is included for depth — a different
 expansion technique where the mock produces three hypothetical answer
 passages whose embeddings are averaged and re-normalized before search.
 HyDE is not required by the PDF; it's shown to demonstrate an alternative
@@ -40,7 +40,7 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
 | 2 | `doc-06` | 0.5855 | Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after… |
 | 3 | `doc-02` | 0.5848 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
 
-### Bonus: Strategy B variant (HyDE Expansion)
+### Strategy B variant (HyDE Expansion)
 
 **Expansion mode:** `hyde`
 
@@ -117,7 +117,7 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
       ]
     },
     "strategy_b_hyde": {
-      "label": "Bonus: Strategy B variant (HyDE Expansion)",
+      "label": "Strategy B variant (HyDE Expansion)",
       "expansion_mode": "hyde",
       "expansions_used": [
         "During peak load the platform adds replicas via a Kubernetes horizontal pod autoscaler driven by CPU and RPS metrics.",
@@ -161,8 +161,8 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
 | Rank | Doc ID | Score | Snippet |
 | ---: | :----- | ----: | :------ |
 | 1 | `doc-03` | 0.6241 | The primary Postgres cluster uses synchronous streaming replication to a hot standby in a second availability zone. If the primary becomes… |
-| 2 | `doc-06` | 0.5190 | Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after… |
-| 3 | `doc-02` | 0.5034 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
+| 2 | `doc-14` | 0.5587 | Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp… |
+| 3 | `doc-13` | 0.5227 | Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase… |
 
 ### Strategy B (AI-Enhanced Retrieval — Query Rewrite)
 
@@ -174,10 +174,10 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
 | Rank | Doc ID | Score | Snippet |
 | ---: | :----- | ----: | :------ |
 | 1 | `doc-03` | 0.7452 | The primary Postgres cluster uses synchronous streaming replication to a hot standby in a second availability zone. If the primary becomes… |
-| 2 | `doc-06` | 0.5658 | Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after… |
-| 3 | `doc-02` | 0.5456 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
+| 2 | `doc-14` | 0.6054 | Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp… |
+| 3 | `doc-06` | 0.5658 | Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after… |
 
-### Bonus: Strategy B variant (HyDE Expansion)
+### Strategy B variant (HyDE Expansion)
 
 **Expansion mode:** `hyde`
 
@@ -192,7 +192,7 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
 | 2 | `doc-06` | 0.6260 | Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after… |
 | 3 | `doc-02` | 0.6148 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
 
-**Overlap with Strategy A top-3:** rewrite=3, hyde=3
+**Overlap with Strategy A top-3:** rewrite=2, hyde=1
 
 <details>
 <summary>JSON</summary>
@@ -214,15 +214,15 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
         },
         {
           "rank": 2,
-          "doc_id": "doc-06",
-          "score": 0.518968,
-          "snippet": "Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after\u2026"
+          "doc_id": "doc-14",
+          "score": 0.558665,
+          "snippet": "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp\u2026"
         },
         {
           "rank": 3,
-          "doc_id": "doc-02",
-          "score": 0.503447,
-          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+          "doc_id": "doc-13",
+          "score": 0.522719,
+          "snippet": "Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase\u2026"
         }
       ]
     },
@@ -241,20 +241,20 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
         },
         {
           "rank": 2,
-          "doc_id": "doc-06",
-          "score": 0.56583,
-          "snippet": "Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after\u2026"
+          "doc_id": "doc-14",
+          "score": 0.605442,
+          "snippet": "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp\u2026"
         },
         {
           "rank": 3,
-          "doc_id": "doc-02",
-          "score": 0.545633,
-          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+          "doc_id": "doc-06",
+          "score": 0.56583,
+          "snippet": "Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after\u2026"
         }
       ]
     },
     "strategy_b_hyde": {
-      "label": "Bonus: Strategy B variant (HyDE Expansion)",
+      "label": "Strategy B variant (HyDE Expansion)",
       "expansion_mode": "hyde",
       "expansions_used": [
         "When the Postgres primary fails, Patroni promotes the synchronous standby in a second availability zone within thirty seconds.",
@@ -284,8 +284,8 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
     }
   },
   "overlap_with_strategy_a": {
-    "strategy_b_rewrite": 3,
-    "strategy_b_hyde": 3
+    "strategy_b_rewrite": 2,
+    "strategy_b_hyde": 1
   }
 }
 ```
@@ -298,8 +298,8 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
 | Rank | Doc ID | Score | Snippet |
 | ---: | :----- | ----: | :------ |
 | 1 | `doc-04` | 0.7164 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
-| 2 | `doc-02` | 0.5098 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
-| 3 | `doc-08` | 0.4693 | Usage events from every service are aggregated nightly into the billing data warehouse. Rating rules convert raw usage into billable line i… |
+| 2 | `doc-13` | 0.5560 | Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase… |
+| 3 | `doc-14` | 0.5369 | Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp… |
 
 ### Strategy B (AI-Enhanced Retrieval — Query Rewrite)
 
@@ -311,10 +311,10 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
 | Rank | Doc ID | Score | Snippet |
 | ---: | :----- | ----: | :------ |
 | 1 | `doc-04` | 0.7782 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
-| 2 | `doc-02` | 0.5310 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
-| 3 | `doc-06` | 0.4597 | Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after… |
+| 2 | `doc-13` | 0.5539 | Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase… |
+| 3 | `doc-14` | 0.5530 | Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp… |
 
-### Bonus: Strategy B variant (HyDE Expansion)
+### Strategy B variant (HyDE Expansion)
 
 **Expansion mode:** `hyde`
 
@@ -326,10 +326,10 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
 | Rank | Doc ID | Score | Snippet |
 | ---: | :----- | ----: | :------ |
 | 1 | `doc-04` | 0.9008 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
-| 2 | `doc-02` | 0.6233 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
-| 3 | `doc-08` | 0.5296 | Usage events from every service are aggregated nightly into the billing data warehouse. Rating rules convert raw usage into billable line i… |
+| 2 | `doc-10` | 0.6737 | All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.… |
+| 3 | `doc-14` | 0.6357 | Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp… |
 
-**Overlap with Strategy A top-3:** rewrite=2, hyde=3
+**Overlap with Strategy A top-3:** rewrite=3, hyde=2
 
 <details>
 <summary>JSON</summary>
@@ -351,15 +351,15 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
         },
         {
           "rank": 2,
-          "doc_id": "doc-02",
-          "score": 0.509759,
-          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+          "doc_id": "doc-13",
+          "score": 0.555984,
+          "snippet": "Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase\u2026"
         },
         {
           "rank": 3,
-          "doc_id": "doc-08",
-          "score": 0.469339,
-          "snippet": "Usage events from every service are aggregated nightly into the billing data warehouse. Rating rules convert raw usage into billable line i\u2026"
+          "doc_id": "doc-14",
+          "score": 0.536905,
+          "snippet": "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp\u2026"
         }
       ]
     },
@@ -378,20 +378,20 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
         },
         {
           "rank": 2,
-          "doc_id": "doc-02",
-          "score": 0.530993,
-          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+          "doc_id": "doc-13",
+          "score": 0.553914,
+          "snippet": "Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase\u2026"
         },
         {
           "rank": 3,
-          "doc_id": "doc-06",
-          "score": 0.459672,
-          "snippet": "Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after\u2026"
+          "doc_id": "doc-14",
+          "score": 0.552986,
+          "snippet": "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp\u2026"
         }
       ]
     },
     "strategy_b_hyde": {
-      "label": "Bonus: Strategy B variant (HyDE Expansion)",
+      "label": "Strategy B variant (HyDE Expansion)",
       "expansion_mode": "hyde",
       "expansions_used": [
         "Customer data in transit is protected by TLS 1.3 with mutual authentication between services and rotated certificates.",
@@ -407,22 +407,22 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
         },
         {
           "rank": 2,
-          "doc_id": "doc-02",
-          "score": 0.623291,
-          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+          "doc_id": "doc-10",
+          "score": 0.67371,
+          "snippet": "All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.\u2026"
         },
         {
           "rank": 3,
-          "doc_id": "doc-08",
-          "score": 0.529643,
-          "snippet": "Usage events from every service are aggregated nightly into the billing data warehouse. Rating rules convert raw usage into billable line i\u2026"
+          "doc_id": "doc-14",
+          "score": 0.635687,
+          "snippet": "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp\u2026"
         }
       ]
     }
   },
   "overlap_with_strategy_a": {
-    "strategy_b_rewrite": 2,
-    "strategy_b_hyde": 3
+    "strategy_b_rewrite": 3,
+    "strategy_b_hyde": 2
   }
 }
 ```
@@ -435,8 +435,8 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
 | Rank | Doc ID | Score | Snippet |
 | ---: | :----- | ----: | :------ |
 | 1 | `doc-05` | 0.6754 | The observability stack combines structured JSON logs shipped through Fluent Bit, Prometheus metrics scraped from every pod, and OpenTeleme… |
-| 2 | `doc-02` | 0.4608 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
-| 3 | `doc-01` | 0.4238 | The platform handles peak load by horizontally scaling stateless services through a Kubernetes Horizontal Pod Autoscaler driven by CPU util… |
+| 2 | `doc-14` | 0.4617 | Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp… |
+| 3 | `doc-02` | 0.4608 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
 
 ### Strategy B (AI-Enhanced Retrieval — Query Rewrite)
 
@@ -449,9 +449,9 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
 | ---: | :----- | ----: | :------ |
 | 1 | `doc-05` | 0.8345 | The observability stack combines structured JSON logs shipped through Fluent Bit, Prometheus metrics scraped from every pod, and OpenTeleme… |
 | 2 | `doc-02` | 0.5435 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
-| 3 | `doc-01` | 0.5065 | The platform handles peak load by horizontally scaling stateless services through a Kubernetes Horizontal Pod Autoscaler driven by CPU util… |
+| 3 | `doc-11` | 0.5352 | Feature flags are evaluated at the edge and inside services via a low-latency SDK backed by a consistent-hash store. Rollouts target user c… |
 
-### Bonus: Strategy B variant (HyDE Expansion)
+### Strategy B variant (HyDE Expansion)
 
 **Expansion mode:** `hyde`
 
@@ -464,9 +464,9 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
 | ---: | :----- | ----: | :------ |
 | 1 | `doc-05` | 0.8554 | The observability stack combines structured JSON logs shipped through Fluent Bit, Prometheus metrics scraped from every pod, and OpenTeleme… |
 | 2 | `doc-02` | 0.6442 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
-| 3 | `doc-01` | 0.6038 | The platform handles peak load by horizontally scaling stateless services through a Kubernetes Horizontal Pod Autoscaler driven by CPU util… |
+| 3 | `doc-12` | 0.6075 | Cloud spend is tagged per team, service, and environment, and a nightly FinOps job emits a per-team dashboard with anomaly alerts. Reserved… |
 
-**Overlap with Strategy A top-3:** rewrite=3, hyde=3
+**Overlap with Strategy A top-3:** rewrite=2, hyde=2
 
 <details>
 <summary>JSON</summary>
@@ -488,15 +488,15 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
         },
         {
           "rank": 2,
-          "doc_id": "doc-02",
-          "score": 0.460754,
-          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+          "doc_id": "doc-14",
+          "score": 0.461717,
+          "snippet": "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp\u2026"
         },
         {
           "rank": 3,
-          "doc_id": "doc-01",
-          "score": 0.423817,
-          "snippet": "The platform handles peak load by horizontally scaling stateless services through a Kubernetes Horizontal Pod Autoscaler driven by CPU util\u2026"
+          "doc_id": "doc-02",
+          "score": 0.460754,
+          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
         }
       ]
     },
@@ -521,14 +521,14 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
         },
         {
           "rank": 3,
-          "doc_id": "doc-01",
-          "score": 0.50651,
-          "snippet": "The platform handles peak load by horizontally scaling stateless services through a Kubernetes Horizontal Pod Autoscaler driven by CPU util\u2026"
+          "doc_id": "doc-11",
+          "score": 0.535184,
+          "snippet": "Feature flags are evaluated at the edge and inside services via a low-latency SDK backed by a consistent-hash store. Rollouts target user c\u2026"
         }
       ]
     },
     "strategy_b_hyde": {
-      "label": "Bonus: Strategy B variant (HyDE Expansion)",
+      "label": "Strategy B variant (HyDE Expansion)",
       "expansion_mode": "hyde",
       "expansions_used": [
         "The observability stack ships structured JSON logs through Fluent Bit and scrapes Prometheus metrics from every pod.",
@@ -550,15 +550,837 @@ Scores are cosine similarities in `[-1, 1]` (higher is better). `Overlap` is the
         },
         {
           "rank": 3,
-          "doc_id": "doc-01",
-          "score": 0.603756,
-          "snippet": "The platform handles peak load by horizontally scaling stateless services through a Kubernetes Horizontal Pod Autoscaler driven by CPU util\u2026"
+          "doc_id": "doc-12",
+          "score": 0.607469,
+          "snippet": "Cloud spend is tagged per team, service, and environment, and a nightly FinOps job emits a per-team dashboard with anomaly alerts. Reserved\u2026"
+        }
+      ]
+    }
+  },
+  "overlap_with_strategy_a": {
+    "strategy_b_rewrite": 2,
+    "strategy_b_hyde": 2
+  }
+}
+```
+
+</details>
+
+## Query: 'How are user sessions and access tokens managed?'
+
+### Strategy A (Raw Vector Search)
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-09` | 0.6756 | User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori… |
+| 2 | `doc-13` | 0.6112 | Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase… |
+| 3 | `doc-04` | 0.5816 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
+
+### Strategy B (AI-Enhanced Retrieval — Query Rewrite)
+
+**Expansion mode:** `rewrite`
+
+**Expansions used:**
+- How are user sessions and access tokens managed? [context: OpenID Connect, JWT access tokens, refresh tokens, HTTP-only cookies, session revocation, JWT, OIDC, JWKS, short-lived credentials, authorization, role-based access control, attribute-based rules, policy engine, multi-factor authentication]
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-09` | 0.8264 | User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori… |
+| 2 | `doc-10` | 0.5584 | All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.… |
+| 3 | `doc-13` | 0.5507 | Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase… |
+
+### Strategy B variant (HyDE Expansion)
+
+**Expansion mode:** `hyde`
+
+**Expansions used:**
+- User sessions are managed with OpenID Connect issuing short-lived JWT access tokens and rotating refresh tokens stored in HTTP-only cookies.
+- Authorization runs through a central policy engine evaluating role-based and attribute-based rules at request time.
+- Session revocation is propagated within seconds through a pub/sub invalidation channel so compromised sessions can be killed quickly.
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-09` | 0.8454 | User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori… |
+| 2 | `doc-10` | 0.6480 | All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.… |
+| 3 | `doc-04` | 0.6160 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
+
+**Overlap with Strategy A top-3:** rewrite=2, hyde=2
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "query": "How are user sessions and access tokens managed?",
+  "runs": {
+    "strategy_a": {
+      "label": "Strategy A (Raw Vector Search)",
+      "expansion_mode": null,
+      "expansions_used": [],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-09",
+          "score": 0.675629,
+          "snippet": "User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-13",
+          "score": 0.611168,
+          "snippet": "Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-04",
+          "score": 0.581646,
+          "snippet": "All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d\u2026"
+        }
+      ]
+    },
+    "strategy_b_rewrite": {
+      "label": "Strategy B (AI-Enhanced Retrieval \u2014 Query Rewrite)",
+      "expansion_mode": "rewrite",
+      "expansions_used": [
+        "How are user sessions and access tokens managed? [context: OpenID Connect, JWT access tokens, refresh tokens, HTTP-only cookies, session revocation, JWT, OIDC, JWKS, short-lived credentials, authorization, role-based access control, attribute-based rules, policy engine, multi-factor authentication]"
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-09",
+          "score": 0.826432,
+          "snippet": "User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-10",
+          "score": 0.558425,
+          "snippet": "All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-13",
+          "score": 0.550683,
+          "snippet": "Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase\u2026"
+        }
+      ]
+    },
+    "strategy_b_hyde": {
+      "label": "Strategy B variant (HyDE Expansion)",
+      "expansion_mode": "hyde",
+      "expansions_used": [
+        "User sessions are managed with OpenID Connect issuing short-lived JWT access tokens and rotating refresh tokens stored in HTTP-only cookies.",
+        "Authorization runs through a central policy engine evaluating role-based and attribute-based rules at request time.",
+        "Session revocation is propagated within seconds through a pub/sub invalidation channel so compromised sessions can be killed quickly."
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-09",
+          "score": 0.845427,
+          "snippet": "User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-10",
+          "score": 0.647969,
+          "snippet": "All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-04",
+          "score": 0.61596,
+          "snippet": "All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d\u2026"
+        }
+      ]
+    }
+  },
+  "overlap_with_strategy_a": {
+    "strategy_b_rewrite": 2,
+    "strategy_b_hyde": 2
+  }
+}
+```
+
+</details>
+
+## Query: 'Describe how secrets and credentials are rotated.'
+
+### Strategy A (Raw Vector Search)
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-10` | 0.6360 | All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.… |
+| 2 | `doc-04` | 0.5491 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
+| 3 | `doc-09` | 0.5116 | User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori… |
+
+### Strategy B (AI-Enhanced Retrieval — Query Rewrite)
+
+**Expansion mode:** `rewrite`
+
+**Expansions used:**
+- Describe how secrets and credentials are rotated. [context: HashiCorp Vault, dynamic secrets, workload identity, credential rotation, key rotation, Vault, automated rotation, short-lived credentials, scheduled rotation, emergency rotation]
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-10` | 0.7927 | All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.… |
+| 2 | `doc-04` | 0.6110 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
+| 3 | `doc-09` | 0.5947 | User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori… |
+
+### Strategy B variant (HyDE Expansion)
+
+**Expansion mode:** `hyde`
+
+**Expansions used:**
+- Service credentials live in HashiCorp Vault and are fetched at start via workload identity rather than baked into images.
+- Dynamic short-lived secrets are preferred over static keys, and every long-lived secret rotates automatically on a schedule.
+- Emergency rotation runs as a single operator command that updates dependent services and restarts pods gracefully.
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-10` | 0.8594 | All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.… |
+| 2 | `doc-09` | 0.6254 | User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori… |
+| 3 | `doc-04` | 0.6171 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
+
+**Overlap with Strategy A top-3:** rewrite=3, hyde=3
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "query": "Describe how secrets and credentials are rotated.",
+  "runs": {
+    "strategy_a": {
+      "label": "Strategy A (Raw Vector Search)",
+      "expansion_mode": null,
+      "expansions_used": [],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-10",
+          "score": 0.63602,
+          "snippet": "All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-04",
+          "score": 0.549132,
+          "snippet": "All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-09",
+          "score": 0.511554,
+          "snippet": "User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori\u2026"
+        }
+      ]
+    },
+    "strategy_b_rewrite": {
+      "label": "Strategy B (AI-Enhanced Retrieval \u2014 Query Rewrite)",
+      "expansion_mode": "rewrite",
+      "expansions_used": [
+        "Describe how secrets and credentials are rotated. [context: HashiCorp Vault, dynamic secrets, workload identity, credential rotation, key rotation, Vault, automated rotation, short-lived credentials, scheduled rotation, emergency rotation]"
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-10",
+          "score": 0.792666,
+          "snippet": "All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-04",
+          "score": 0.610959,
+          "snippet": "All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-09",
+          "score": 0.594701,
+          "snippet": "User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori\u2026"
+        }
+      ]
+    },
+    "strategy_b_hyde": {
+      "label": "Strategy B variant (HyDE Expansion)",
+      "expansion_mode": "hyde",
+      "expansions_used": [
+        "Service credentials live in HashiCorp Vault and are fetched at start via workload identity rather than baked into images.",
+        "Dynamic short-lived secrets are preferred over static keys, and every long-lived secret rotates automatically on a schedule.",
+        "Emergency rotation runs as a single operator command that updates dependent services and restarts pods gracefully."
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-10",
+          "score": 0.859401,
+          "snippet": "All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-09",
+          "score": 0.625361,
+          "snippet": "User authentication uses OpenID Connect with short-lived JWT access tokens and rotating refresh tokens stored as HTTP-only cookies. Authori\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-04",
+          "score": 0.617074,
+          "snippet": "All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d\u2026"
         }
       ]
     }
   },
   "overlap_with_strategy_a": {
     "strategy_b_rewrite": 3,
+    "strategy_b_hyde": 3
+  }
+}
+```
+
+</details>
+
+## Query: 'How do feature flags support safe experimentation?'
+
+### Strategy A (Raw Vector Search)
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-11` | 0.7133 | Feature flags are evaluated at the edge and inside services via a low-latency SDK backed by a consistent-hash store. Rollouts target user c… |
+| 2 | `doc-02` | 0.5368 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
+| 3 | `doc-05` | 0.5231 | The observability stack combines structured JSON logs shipped through Fluent Bit, Prometheus metrics scraped from every pod, and OpenTeleme… |
+
+### Strategy B (AI-Enhanced Retrieval — Query Rewrite)
+
+**Expansion mode:** `rewrite`
+
+**Expansions used:**
+- How do feature flags support safe experimentation? [context: feature flags, kill switch, progressive rollout, cohort targeting, A/B tests, treatment, assignment events]
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-11` | 0.7514 | Feature flags are evaluated at the edge and inside services via a low-latency SDK backed by a consistent-hash store. Rollouts target user c… |
+| 2 | `doc-02` | 0.5291 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
+| 3 | `doc-05` | 0.5227 | The observability stack combines structured JSON logs shipped through Fluent Bit, Prometheus metrics scraped from every pod, and OpenTeleme… |
+
+### Strategy B variant (HyDE Expansion)
+
+**Expansion mode:** `hyde`
+
+**Expansions used:**
+- Feature flags are evaluated at the edge and inside services via a low-latency SDK backed by a consistent-hash store.
+- Rollouts target cohorts or percentage buckets and emit assignment events so A/B tests can attribute metric changes to treatments.
+- Kill switches let operators disable any feature in seconds without a redeploy, limiting blast radius during incidents.
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-11` | 0.8937 | Feature flags are evaluated at the edge and inside services via a low-latency SDK backed by a consistent-hash store. Rollouts target user c… |
+| 2 | `doc-07` | 0.6383 | Every merge to main triggers a CI pipeline that runs unit, integration, and contract tests before building a container image. Deployments u… |
+| 3 | `doc-02` | 0.6140 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
+
+**Overlap with Strategy A top-3:** rewrite=3, hyde=2
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "query": "How do feature flags support safe experimentation?",
+  "runs": {
+    "strategy_a": {
+      "label": "Strategy A (Raw Vector Search)",
+      "expansion_mode": null,
+      "expansions_used": [],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-11",
+          "score": 0.713259,
+          "snippet": "Feature flags are evaluated at the edge and inside services via a low-latency SDK backed by a consistent-hash store. Rollouts target user c\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-02",
+          "score": 0.53678,
+          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-05",
+          "score": 0.523107,
+          "snippet": "The observability stack combines structured JSON logs shipped through Fluent Bit, Prometheus metrics scraped from every pod, and OpenTeleme\u2026"
+        }
+      ]
+    },
+    "strategy_b_rewrite": {
+      "label": "Strategy B (AI-Enhanced Retrieval \u2014 Query Rewrite)",
+      "expansion_mode": "rewrite",
+      "expansions_used": [
+        "How do feature flags support safe experimentation? [context: feature flags, kill switch, progressive rollout, cohort targeting, A/B tests, treatment, assignment events]"
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-11",
+          "score": 0.751425,
+          "snippet": "Feature flags are evaluated at the edge and inside services via a low-latency SDK backed by a consistent-hash store. Rollouts target user c\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-02",
+          "score": 0.529096,
+          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-05",
+          "score": 0.522682,
+          "snippet": "The observability stack combines structured JSON logs shipped through Fluent Bit, Prometheus metrics scraped from every pod, and OpenTeleme\u2026"
+        }
+      ]
+    },
+    "strategy_b_hyde": {
+      "label": "Strategy B variant (HyDE Expansion)",
+      "expansion_mode": "hyde",
+      "expansions_used": [
+        "Feature flags are evaluated at the edge and inside services via a low-latency SDK backed by a consistent-hash store.",
+        "Rollouts target cohorts or percentage buckets and emit assignment events so A/B tests can attribute metric changes to treatments.",
+        "Kill switches let operators disable any feature in seconds without a redeploy, limiting blast radius during incidents."
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-11",
+          "score": 0.893721,
+          "snippet": "Feature flags are evaluated at the edge and inside services via a low-latency SDK backed by a consistent-hash store. Rollouts target user c\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-07",
+          "score": 0.638255,
+          "snippet": "Every merge to main triggers a CI pipeline that runs unit, integration, and contract tests before building a container image. Deployments u\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-02",
+          "score": 0.614044,
+          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+        }
+      ]
+    }
+  },
+  "overlap_with_strategy_a": {
+    "strategy_b_rewrite": 3,
+    "strategy_b_hyde": 2
+  }
+}
+```
+
+</details>
+
+## Query: 'What does the disaster recovery strategy cover?'
+
+### Strategy A (Raw Vector Search)
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-14` | 0.5531 | Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp… |
+| 2 | `doc-03` | 0.4904 | The primary Postgres cluster uses synchronous streaming replication to a hot standby in a second availability zone. If the primary becomes… |
+| 3 | `doc-02` | 0.4896 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
+
+### Strategy B (AI-Enhanced Retrieval — Query Rewrite)
+
+**Expansion mode:** `rewrite`
+
+**Expansions used:**
+- What does the disaster recovery strategy cover? [context: recovery point objective, recovery time objective, cross-region backups, transaction-log shipping, game-day, RPO, RTO, restore, runbook, cross-region]
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-14` | 0.6649 | Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp… |
+| 2 | `doc-02` | 0.5431 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
+| 3 | `doc-03` | 0.5382 | The primary Postgres cluster uses synchronous streaming replication to a hot standby in a second availability zone. If the primary becomes… |
+
+### Strategy B variant (HyDE Expansion)
+
+**Expansion mode:** `hyde`
+
+**Expansions used:**
+- Every stateful service has documented recovery point and recovery time objectives backed by cross-region replication.
+- Daily full backups plus continuous transaction-log shipping land in a separate account in a different region for isolation.
+- Quarterly game-day exercises restore the largest databases into an isolated VPC and verify application-level integrity.
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-14` | 0.8228 | Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp… |
+| 2 | `doc-03` | 0.6260 | The primary Postgres cluster uses synchronous streaming replication to a hot standby in a second availability zone. If the primary becomes… |
+| 3 | `doc-04` | 0.6014 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
+
+**Overlap with Strategy A top-3:** rewrite=3, hyde=2
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "query": "What does the disaster recovery strategy cover?",
+  "runs": {
+    "strategy_a": {
+      "label": "Strategy A (Raw Vector Search)",
+      "expansion_mode": null,
+      "expansions_used": [],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-14",
+          "score": 0.553119,
+          "snippet": "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-03",
+          "score": 0.490432,
+          "snippet": "The primary Postgres cluster uses synchronous streaming replication to a hot standby in a second availability zone. If the primary becomes\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-02",
+          "score": 0.48963,
+          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+        }
+      ]
+    },
+    "strategy_b_rewrite": {
+      "label": "Strategy B (AI-Enhanced Retrieval \u2014 Query Rewrite)",
+      "expansion_mode": "rewrite",
+      "expansions_used": [
+        "What does the disaster recovery strategy cover? [context: recovery point objective, recovery time objective, cross-region backups, transaction-log shipping, game-day, RPO, RTO, restore, runbook, cross-region]"
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-14",
+          "score": 0.664888,
+          "snippet": "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-02",
+          "score": 0.543061,
+          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-03",
+          "score": 0.538192,
+          "snippet": "The primary Postgres cluster uses synchronous streaming replication to a hot standby in a second availability zone. If the primary becomes\u2026"
+        }
+      ]
+    },
+    "strategy_b_hyde": {
+      "label": "Strategy B variant (HyDE Expansion)",
+      "expansion_mode": "hyde",
+      "expansions_used": [
+        "Every stateful service has documented recovery point and recovery time objectives backed by cross-region replication.",
+        "Daily full backups plus continuous transaction-log shipping land in a separate account in a different region for isolation.",
+        "Quarterly game-day exercises restore the largest databases into an isolated VPC and verify application-level integrity."
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-14",
+          "score": 0.822837,
+          "snippet": "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-03",
+          "score": 0.626023,
+          "snippet": "The primary Postgres cluster uses synchronous streaming replication to a hot standby in a second availability zone. If the primary becomes\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-04",
+          "score": 0.601419,
+          "snippet": "All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d\u2026"
+        }
+      ]
+    }
+  },
+  "overlap_with_strategy_a": {
+    "strategy_b_rewrite": 3,
+    "strategy_b_hyde": 2
+  }
+}
+```
+
+</details>
+
+## Query: 'How is personal data handled when a user requests deletion?'
+
+### Strategy A (Raw Vector Search)
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-13` | 0.8166 | Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase… |
+| 2 | `doc-10` | 0.5365 | All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.… |
+| 3 | `doc-04` | 0.5058 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
+
+### Strategy B (AI-Enhanced Retrieval — Query Rewrite)
+
+**Expansion mode:** `rewrite`
+
+**Expansions used:**
+- How is personal data handled when a user requests deletion? [context: customer data, personally identifiable, at rest, in transit, personally identifiable information, GDPR deletion, purpose tags, data subject requests, erasure, anonymization, data subject request, statutory deadline, backups]
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-13` | 0.8031 | Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase… |
+| 2 | `doc-04` | 0.5732 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
+| 3 | `doc-14` | 0.5508 | Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp… |
+
+### Strategy B variant (HyDE Expansion)
+
+**Expansion mode:** `hyde`
+
+**Expansions used:**
+- User deletion requests trigger a workflow that erases or anonymizes records across the online store, warehouse, backups, and analytics.
+- Personal data is catalogued with purpose tags so each field's legal basis for processing is explicit.
+- Access requests are fulfilled by an automated export service that bundles all personal data into an encrypted archive for the user.
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-13` | 0.9094 | Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase… |
+| 2 | `doc-04` | 0.6371 | All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d… |
+| 3 | `doc-14` | 0.6311 | Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp… |
+
+**Overlap with Strategy A top-3:** rewrite=2, hyde=2
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "query": "How is personal data handled when a user requests deletion?",
+  "runs": {
+    "strategy_a": {
+      "label": "Strategy A (Raw Vector Search)",
+      "expansion_mode": null,
+      "expansions_used": [],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-13",
+          "score": 0.816626,
+          "snippet": "Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-10",
+          "score": 0.536548,
+          "snippet": "All service credentials, database passwords, and API tokens live in HashiCorp Vault and are fetched at process start via workload identity.\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-04",
+          "score": 0.50584,
+          "snippet": "All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d\u2026"
+        }
+      ]
+    },
+    "strategy_b_rewrite": {
+      "label": "Strategy B (AI-Enhanced Retrieval \u2014 Query Rewrite)",
+      "expansion_mode": "rewrite",
+      "expansions_used": [
+        "How is personal data handled when a user requests deletion? [context: customer data, personally identifiable, at rest, in transit, personally identifiable information, GDPR deletion, purpose tags, data subject requests, erasure, anonymization, data subject request, statutory deadline, backups]"
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-13",
+          "score": 0.803129,
+          "snippet": "Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-04",
+          "score": 0.573156,
+          "snippet": "All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-14",
+          "score": 0.550773,
+          "snippet": "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp\u2026"
+        }
+      ]
+    },
+    "strategy_b_hyde": {
+      "label": "Strategy B variant (HyDE Expansion)",
+      "expansion_mode": "hyde",
+      "expansions_used": [
+        "User deletion requests trigger a workflow that erases or anonymizes records across the online store, warehouse, backups, and analytics.",
+        "Personal data is catalogued with purpose tags so each field's legal basis for processing is explicit.",
+        "Access requests are fulfilled by an automated export service that bundles all personal data into an encrypted archive for the user."
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-13",
+          "score": 0.90939,
+          "snippet": "Personal data is catalogued with purpose tags so each field's legal basis is explicit. User deletion requests trigger a workflow that erase\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-04",
+          "score": 0.637054,
+          "snippet": "All customer data is protected by TLS 1.3 in transit using mutual authentication between services, with certificates rotated every ninety d\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-14",
+          "score": 0.63112,
+          "snippet": "Every stateful service has a documented recovery point and recovery time objective. Daily full backups and continuous transaction-log shipp\u2026"
+        }
+      ]
+    }
+  },
+  "overlap_with_strategy_a": {
+    "strategy_b_rewrite": 2,
+    "strategy_b_hyde": 2
+  }
+}
+```
+
+</details>
+
+## Query: 'How are push notifications delivered to mobile devices?'
+
+### Strategy A (Raw Vector Search)
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-16` | 0.7425 | Push notifications are fanned out through a dedicated notification service that batches APNs and FCM deliveries, respects per-user quiet ho… |
+| 2 | `doc-02` | 0.5121 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
+| 3 | `doc-06` | 0.4684 | Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after… |
+
+### Strategy B (AI-Enhanced Retrieval — Query Rewrite)
+
+**Expansion mode:** `rewrite`
+
+**Expansions used:**
+- How are push notifications delivered to mobile devices? [context: APNs, FCM, push notifications, delivery receipts, quiet hours, deduplication, fan-out, campaign, throttle, iOS, Android]
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-16` | 0.8108 | Push notifications are fanned out through a dedicated notification service that batches APNs and FCM deliveries, respects per-user quiet ho… |
+| 2 | `doc-02` | 0.5263 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
+| 3 | `doc-03` | 0.4928 | The primary Postgres cluster uses synchronous streaming replication to a hot standby in a second availability zone. If the primary becomes… |
+
+### Strategy B variant (HyDE Expansion)
+
+**Expansion mode:** `hyde`
+
+**Expansions used:**
+- Push notifications are fanned out through a dedicated service that batches APNs and FCM deliveries and respects per-user quiet hours.
+- Identical alerts are deduplicated across devices and delivery receipts are correlated back to the originating event.
+- A throttle protects provider APIs during coordinated launches so burst campaigns don't trip rate limits.
+
+| Rank | Doc ID | Score | Snippet |
+| ---: | :----- | ----: | :------ |
+| 1 | `doc-16` | 0.8652 | Push notifications are fanned out through a dedicated notification service that batches APNs and FCM deliveries, respects per-user quiet ho… |
+| 2 | `doc-02` | 0.6427 | Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne… |
+| 3 | `doc-06` | 0.6426 | Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after… |
+
+**Overlap with Strategy A top-3:** rewrite=2, hyde=3
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "query": "How are push notifications delivered to mobile devices?",
+  "runs": {
+    "strategy_a": {
+      "label": "Strategy A (Raw Vector Search)",
+      "expansion_mode": null,
+      "expansions_used": [],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-16",
+          "score": 0.742504,
+          "snippet": "Push notifications are fanned out through a dedicated notification service that batches APNs and FCM deliveries, respects per-user quiet ho\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-02",
+          "score": 0.512067,
+          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-06",
+          "score": 0.468439,
+          "snippet": "Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after\u2026"
+        }
+      ]
+    },
+    "strategy_b_rewrite": {
+      "label": "Strategy B (AI-Enhanced Retrieval \u2014 Query Rewrite)",
+      "expansion_mode": "rewrite",
+      "expansions_used": [
+        "How are push notifications delivered to mobile devices? [context: APNs, FCM, push notifications, delivery receipts, quiet hours, deduplication, fan-out, campaign, throttle, iOS, Android]"
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-16",
+          "score": 0.810776,
+          "snippet": "Push notifications are fanned out through a dedicated notification service that batches APNs and FCM deliveries, respects per-user quiet ho\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-02",
+          "score": 0.526349,
+          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-03",
+          "score": 0.492805,
+          "snippet": "The primary Postgres cluster uses synchronous streaming replication to a hot standby in a second availability zone. If the primary becomes\u2026"
+        }
+      ]
+    },
+    "strategy_b_hyde": {
+      "label": "Strategy B variant (HyDE Expansion)",
+      "expansion_mode": "hyde",
+      "expansions_used": [
+        "Push notifications are fanned out through a dedicated service that batches APNs and FCM deliveries and respects per-user quiet hours.",
+        "Identical alerts are deduplicated across devices and delivery receipts are correlated back to the originating event.",
+        "A throttle protects provider APIs during coordinated launches so burst campaigns don't trip rate limits."
+      ],
+      "hits": [
+        {
+          "rank": 1,
+          "doc_id": "doc-16",
+          "score": 0.865176,
+          "snippet": "Push notifications are fanned out through a dedicated notification service that batches APNs and FCM deliveries, respects per-user quiet ho\u2026"
+        },
+        {
+          "rank": 2,
+          "doc_id": "doc-02",
+          "score": 0.642671,
+          "snippet": "Static and semi-static responses are served from a global content delivery network with a multi-tier cache hierarchy. Hot objects are pinne\u2026"
+        },
+        {
+          "rank": 3,
+          "doc_id": "doc-06",
+          "score": 0.642592,
+          "snippet": "Asynchronous workloads flow through Kafka topics partitioned by tenant. Consumers use cooperative rebalancing and commit offsets only after\u2026"
+        }
+      ]
+    }
+  },
+  "overlap_with_strategy_a": {
+    "strategy_b_rewrite": 2,
     "strategy_b_hyde": 3
   }
 }
