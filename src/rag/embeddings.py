@@ -54,7 +54,7 @@ class SentenceTransformerEmbedder:
 
         self._model = SentenceTransformer(model_name)
         self._query_prefix = query_prefix
-        self._dim = int(self._model.get_sentence_embedding_dimension())
+        self._dim = int(self._model.get_embedding_dimension())
 
     @property
     def dimension(self) -> int:
